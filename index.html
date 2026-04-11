@@ -1070,9 +1070,330 @@
     opacity: 1;
     transform: translateY(0);
   }
+
+  /* ============ Scroll Progress Bar ============ */
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--orange), var(--coral), var(--yellow));
+    z-index: 200;
+    box-shadow: 0 2px 12px rgba(242, 107, 31, 0.5);
+    transition: width 0.08s linear;
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* ============ Custom Cursor ============ */
+  .cursor-dot, .cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
+    will-change: transform;
+    mix-blend-mode: difference;
+    opacity: 0;
+  }
+  .cursor-dot.is-ready, .cursor-ring.is-ready { opacity: 1; }
+  .cursor-dot {
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    border-radius: 50%;
+  }
+  .cursor-ring {
+    width: 40px;
+    height: 40px;
+    border: 1.5px solid #fff;
+    border-radius: 50%;
+    transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, background 0.25s ease, transform 0.1s linear;
+  }
+  .cursor-ring.is-hover {
+    width: 72px;
+    height: 72px;
+    background: rgba(242, 107, 31, 0.18);
+    border-color: var(--orange);
+  }
+  .cursor-ring.is-text {
+    width: 4px;
+    height: 28px;
+    border-radius: 2px;
+    background: #fff;
+    border-color: transparent;
+  }
+  body.cursor-active { cursor: none; }
+  body.cursor-active a, body.cursor-active button, body.cursor-active .btn { cursor: none; }
+  @media (hover: none), (max-width: 880px) {
+    .cursor-dot, .cursor-ring { display: none; }
+  }
+
+  /* ============ Hero Letter Reveal ============ */
+  .hero h1 .char {
+    display: inline-block;
+    transform: translateY(110%) rotate(8deg);
+    opacity: 0;
+    transition: transform 0.9s cubic-bezier(0.2, 0.9, 0.25, 1), opacity 0.6s ease;
+  }
+  .hero h1.split-in .char {
+    transform: translateY(0) rotate(0);
+    opacity: 1;
+  }
+  /* Re-apply gradient text styling to chars inside .accent (so they remain visible after split) */
+  .hero h1 .accent .char {
+    background: linear-gradient(135deg, var(--orange), var(--coral));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* ============ Hero Mouse Parallax ============ */
+  .hero-visual {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+  }
+  .parallax-layer {
+    transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
+    will-change: transform;
+  }
+
+  /* ============ 3D Tilt Cards ============ */
+  [data-tilt] {
+    transform-style: preserve-3d;
+    transform: perspective(900px) rotateX(0) rotateY(0);
+    transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1);
+    will-change: transform;
+  }
+  [data-tilt] > * {
+    transform: translateZ(0);
+  }
+  [data-tilt]:hover > .service-icon,
+  [data-tilt]:hover > .service-num {
+    transform: translateZ(40px);
+  }
+  [data-tilt]:hover > h3,
+  [data-tilt]:hover > h4 {
+    transform: translateZ(28px);
+  }
+  @media (hover: none), (max-width: 880px) {
+    [data-tilt] { transform: none !important; }
+  }
+
+  /* ============ Animated Counter ============ */
+  .stat-num [data-counter] {
+    display: inline-block;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ============ Bento Highlights Section ============ */
+  .bento {
+    background: var(--cream);
+    padding: 120px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .bento::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 217, 194, 0.5), transparent 70%);
+    top: -150px;
+    left: -150px;
+    pointer-events: none;
+  }
+  .bento::after {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 182, 200, 0.4), transparent 70%);
+    bottom: -150px;
+    right: -150px;
+    pointer-events: none;
+  }
+  .bento .container { position: relative; z-index: 1; }
+  .bento-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 40px;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
+  }
+  .bento-head h2 {
+    font-size: clamp(34px, 4.5vw, 56px);
+    margin: 16px 0 0;
+    max-width: 720px;
+  }
+  .bento-head h2 .ko-accent {
+    background: linear-gradient(135deg, var(--orange), var(--coral));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    position: relative;
+    display: inline-block;
+  }
+  .bento-head .arrow-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--orange);
+    padding: 12px 0;
+    border-bottom: 2px solid var(--orange);
+    letter-spacing: 0.05em;
+  }
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 180px;
+    gap: 20px;
+  }
+  .bento-cell {
+    background: #fff;
+    border-radius: 28px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1), box-shadow 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .bento-cell:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow);
+  }
+  .bento-cell .label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--orange);
+    text-transform: uppercase;
+  }
+  .bento-cell .big-num {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: clamp(54px, 7vw, 90px);
+    line-height: 0.95;
+    color: var(--ink);
+    letter-spacing: -0.04em;
+  }
+  .bento-cell .big-num .unit {
+    font-size: 0.5em;
+    color: var(--orange);
+    margin-left: 4px;
+  }
+  .bento-cell .desc {
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.7;
+  }
+
+  /* Bento cells span variations */
+  .bc-1 { grid-column: span 2; grid-row: span 2; background: linear-gradient(135deg, var(--orange) 0%, var(--coral) 100%); color: #fff; }
+  .bc-1 .label { color: rgba(255,255,255,0.85); }
+  .bc-1 .big-num { color: #fff; font-size: clamp(72px, 10vw, 132px); }
+  .bc-1 .big-num .unit { color: var(--yellow); }
+  .bc-1 .desc { color: rgba(255,255,255,0.92); font-size: 15px; max-width: 320px; }
+  .bc-1::before {
+    content: '';
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    top: -100px;
+    right: -100px;
+  }
+  .bc-1::after {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    bottom: -60px;
+    right: 60px;
+  }
+  .bc-1 > * { position: relative; z-index: 1; }
+
+  .bc-2 { grid-column: span 2; background: var(--ink); color: #fff; }
+  .bc-2 .label { color: var(--peach); }
+  .bc-2 .desc { color: rgba(255,255,255,0.75); }
+  .bc-2 .marquee-mini {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: clamp(16px, 2.4vw, 22px);
+    color: #fff;
+    letter-spacing: -0.01em;
+    flex-wrap: wrap;
+  }
+  .bc-2 .marquee-mini .star { color: var(--orange); }
+
+  .bc-3 { background: var(--green-soft); }
+  .bc-3 .label { color: #5a7d2a; }
+  .bc-3 .big-num { color: #2d4d10; }
+  .bc-3 .desc { color: #4a6b1f; font-weight: 600; }
+
+  .bc-4 { background: var(--yellow); }
+  .bc-4 .label { color: #946c00; }
+  .bc-4 .big-num { color: #5a4100; }
+  .bc-4 .big-num .unit { color: #946c00; }
+  .bc-4 .desc { color: #6d4f00; font-weight: 600; }
+
+  .bc-5 { grid-column: span 2; background: linear-gradient(135deg, var(--pink), var(--peach)); }
+  .bc-5 .label { color: #b8456a; }
+  .bc-5 .big-num { color: var(--ink); }
+  .bc-5 .desc { color: var(--ink-2); }
+  .bc-5 .floating-emoji {
+    position: absolute;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 22px;
+    background: #fff;
+    border-radius: 999px;
+    padding: 8px 16px;
+    box-shadow: var(--shadow-soft);
+    color: var(--orange);
+  }
+  .bc-5 .fe-1 { top: 24px; right: 28px; transform: rotate(8deg); }
+  .bc-5 .fe-2 { bottom: 28px; right: 80px; transform: rotate(-6deg); background: var(--ink); color: #fff; font-size: 14px; }
+
+  .bc-6 { grid-column: span 2; background: var(--cream-2); }
+
+  @media (max-width: 1080px) {
+    .bento-grid { grid-template-columns: repeat(2, 1fr); }
+    .bc-1, .bc-2, .bc-5, .bc-6 { grid-column: span 2; }
+  }
+  @media (max-width: 600px) {
+    .bento-grid { grid-template-columns: 1fr; grid-auto-rows: 160px; }
+    .bc-1 { grid-row: span 2; }
+    .bc-1, .bc-2, .bc-5, .bc-6 { grid-column: span 1; }
+  }
 </style>
 </head>
 <body>
+
+<!-- Scroll Progress Bar -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Custom Cursor -->
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-dot" id="cursorDot"></div>
 
 <!-- ============ HEADER ============ -->
 <header class="header">
@@ -1232,7 +1553,7 @@
       <p>ブランド戦略から日々のSNS運用まで、ビューティーマーケティングのすべてを。</p>
     </div>
     <div class="services-grid">
-      <div class="service-card reveal">
+      <div class="service-card reveal" data-tilt>
         <div class="service-num">SERVICE / 01</div>
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1246,7 +1567,7 @@
           <span>戦略立案</span><span>ローンチ支援</span><span>市場調査</span>
         </div>
       </div>
-      <div class="service-card reveal">
+      <div class="service-card reveal" data-tilt>
         <div class="service-num">SERVICE / 02</div>
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1262,7 +1583,7 @@
           <span>YouTuber</span><span>Instagrammer</span><span>TikToker</span>
         </div>
       </div>
-      <div class="service-card reveal">
+      <div class="service-card reveal" data-tilt>
         <div class="service-num">SERVICE / 03</div>
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1278,7 +1599,7 @@
           <span>アカウント運用</span><span>動画制作</span><span>分析</span>
         </div>
       </div>
-      <div class="service-card reveal">
+      <div class="service-card reveal" data-tilt>
         <div class="service-num">SERVICE / 04</div>
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1350,6 +1671,71 @@
   </div>
 </section>
 
+<!-- ============ BENTO HIGHLIGHTS ============ -->
+<section class="bento">
+  <div class="container">
+    <div class="bento-head reveal">
+      <div>
+        <span class="eyebrow">Highlights</span>
+        <h2>数字で見る、<span class="ko-accent">Sunnyway</span>。</h2>
+      </div>
+      <a href="#works" class="arrow-link">
+        VIEW WORKS
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+    <div class="bento-grid">
+      <!-- BIG hero stat: 120+ brands -->
+      <div class="bento-cell bc-1 reveal">
+        <div class="label">Partner Brands</div>
+        <div class="big-num"><span data-counter="120">0</span><span class="unit">+</span></div>
+        <p class="desc">韓国を代表するK-Beautyブランドの日本展開を、ローンチからグロースまで伴走支援。</p>
+      </div>
+
+      <!-- Mission marquee mini -->
+      <div class="bento-cell bc-2 reveal">
+        <div class="label">Our Mission</div>
+        <div class="marquee-mini">
+          SURPRISE <span class="star">✦</span> JOY <span class="star">✦</span> WOW!
+        </div>
+        <p class="desc">サプライズを起こし続けよう。ブランドとファンの間に、わくわくする出会いを。</p>
+      </div>
+
+      <!-- 3,000+ influencers -->
+      <div class="bento-cell bc-3 reveal">
+        <div class="label">Influencers</div>
+        <div class="big-num"><span data-counter="3000">0</span><span class="unit">+</span></div>
+        <p class="desc">ビューティー特化ネットワーク</p>
+      </div>
+
+      <!-- 98% satisfaction -->
+      <div class="bento-cell bc-4 reveal">
+        <div class="label">Satisfaction</div>
+        <div class="big-num"><span data-counter="98">0</span><span class="unit">%</span></div>
+        <p class="desc">クライアント満足度</p>
+      </div>
+
+      <!-- Pink card with reach number -->
+      <div class="bento-cell bc-5 reveal">
+        <div class="label">Total Reach</div>
+        <div class="big-num"><span data-counter="450">0</span><span class="unit">M+</span></div>
+        <p class="desc">SNS総リーチ数（年間）</p>
+        <span class="floating-emoji fe-1">K-BEAUTY</span>
+        <span class="floating-emoji fe-2">SINCE 2018</span>
+      </div>
+
+      <!-- Cream card with year founded -->
+      <div class="bento-cell bc-6 reveal">
+        <div class="label">Years of K-Beauty</div>
+        <div class="big-num"><span data-counter="7">0</span><span class="unit">YRS</span></div>
+        <p class="desc">2018年の創業以来、韓国コスメブランドの日本進出を専門に手掛けてきました。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ WORKS ============ -->
 <section id="works" class="works">
   <div class="container">
@@ -1359,7 +1745,7 @@
       <p>これまでに手がけた、選りすぐりのプロジェクト事例。</p>
     </div>
     <div class="works-grid">
-      <div class="work-card reveal">
+      <div class="work-card reveal" data-tilt>
         <div class="work-thumb">01</div>
         <div class="work-info">
           <span class="work-cat">CASTING / SNS</span>
@@ -1367,7 +1753,7 @@
           <p>YouTube・Instagram総再生数450万回突破</p>
         </div>
       </div>
-      <div class="work-card reveal">
+      <div class="work-card reveal" data-tilt>
         <div class="work-thumb">02</div>
         <div class="work-info">
           <span class="work-cat">BRAND MARKETING</span>
@@ -1375,7 +1761,7 @@
           <p>EC売上前年比260%達成</p>
         </div>
       </div>
-      <div class="work-card reveal">
+      <div class="work-card reveal" data-tilt>
         <div class="work-thumb">03</div>
         <div class="work-info">
           <span class="work-cat">INFLUENCER PR</span>
@@ -1383,7 +1769,7 @@
           <p>TikTokトレンドハッシュタグ1位獲得</p>
         </div>
       </div>
-      <div class="work-card reveal">
+      <div class="work-card reveal" data-tilt>
         <div class="work-thumb">04</div>
         <div class="work-info">
           <span class="work-cat">EVENT / POPUP</span>
@@ -1391,7 +1777,7 @@
           <p>10日間で来場者1.2万人を動員</p>
         </div>
       </div>
-      <div class="work-card reveal">
+      <div class="work-card reveal" data-tilt>
         <div class="work-thumb">05</div>
         <div class="work-info">
           <span class="work-cat">SNS PRODUCTION</span>
@@ -1399,7 +1785,7 @@
           <p>フォロワー数6ヶ月で15万人増</p>
         </div>
       </div>
-      <div class="work-card reveal">
+      <div class="work-card reveal" data-tilt>
         <div class="work-thumb">06</div>
         <div class="work-info">
           <span class="work-cat">ADVERTISING</span>
@@ -1556,7 +1942,7 @@
 </footer>
 
 <script>
-  // Reveal on scroll
+  // ========== Reveal on scroll ==========
   const io = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -1566,6 +1952,213 @@
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+  // ========== Scroll Progress Bar ==========
+  const scrollBar = document.getElementById('scrollProgress');
+  const updateScrollBar = () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    scrollBar.style.width = pct + '%';
+  };
+  window.addEventListener('scroll', updateScrollBar, { passive: true });
+  updateScrollBar();
+
+  // ========== Custom Cursor ==========
+  const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (isFinePointer && window.innerWidth > 880) {
+    document.body.classList.add('cursor-active');
+    const dot = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+    let rx = mx, ry = my;
+    let dx = mx, dy = my;
+
+    let firstMove = true;
+    window.addEventListener('mousemove', (e) => {
+      mx = e.clientX;
+      my = e.clientY;
+      if (firstMove) {
+        firstMove = false;
+        // Snap rings to cursor on first move so we don't see them slide in from origin
+        rx = mx; ry = my; dx = mx; dy = my;
+        dot.classList.add('is-ready');
+        ring.classList.add('is-ready');
+      }
+    });
+
+    const animateCursor = () => {
+      // dot follows immediately, ring lags slightly
+      dx += (mx - dx) * 0.85;
+      dy += (my - dy) * 0.85;
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      dot.style.transform = `translate(${dx}px, ${dy}px) translate(-50%, -50%)`;
+      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+      requestAnimationFrame(animateCursor);
+    };
+    animateCursor();
+
+    // Hover state on interactive elements
+    const hoverables = document.querySelectorAll('a, button, .btn, [data-tilt], .brand-card, .floating-tag, .nav-toggle');
+    hoverables.forEach((el) => {
+      el.addEventListener('mouseenter', () => ring.classList.add('is-hover'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('is-hover'));
+    });
+
+    window.addEventListener('mouseleave', () => {
+      dot.style.opacity = '0';
+      ring.style.opacity = '0';
+    });
+    window.addEventListener('mouseenter', () => {
+      dot.style.opacity = '1';
+      ring.style.opacity = '1';
+    });
+  }
+
+  // ========== Hero Letter-by-Letter Reveal ==========
+  const splitHeroH1 = () => {
+    const h1 = document.querySelector('.hero h1');
+    if (!h1) return;
+    // Walk children, splitting text nodes into char spans, preserving <br> and <span class="accent">
+    const wrap = (textNode) => {
+      // Collapse internal whitespace, strip ONLY leading whitespace
+      // (preserve trailing space so "the " remains separated from <span>surprises</span>)
+      const raw = textNode.textContent.replace(/\s+/g, ' ').replace(/^\s/, '');
+      if (!raw.trim()) {
+        textNode.parentNode.removeChild(textNode);
+        return;
+      }
+      const frag = document.createDocumentFragment();
+      [...raw].forEach((ch) => {
+        if (ch === ' ') {
+          frag.appendChild(document.createTextNode(' '));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'char';
+          span.textContent = ch;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    };
+    const walk = (node) => {
+      const children = [...node.childNodes];
+      children.forEach((child) => {
+        if (child.nodeType === Node.TEXT_NODE) {
+          if (child.textContent.trim()) {
+            wrap(child);
+          } else {
+            // Pure whitespace between elements (e.g., newlines after <br>): drop it
+            child.parentNode.removeChild(child);
+          }
+        } else if (child.nodeType === Node.ELEMENT_NODE && child.tagName !== 'BR') {
+          walk(child);
+        }
+      });
+    };
+    walk(h1);
+    // Stagger animation
+    const chars = h1.querySelectorAll('.char');
+    chars.forEach((ch, i) => {
+      ch.style.transitionDelay = (i * 35) + 'ms';
+    });
+    // Trigger after a tick
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => h1.classList.add('split-in'));
+    });
+  };
+  splitHeroH1();
+
+  // ========== Hero Mouse Parallax ==========
+  const heroVisual = document.querySelector('.hero-visual');
+  if (heroVisual && isFinePointer) {
+    const mascot = heroVisual.querySelector('.hero-mascot');
+    const circle = heroVisual.querySelector('.hero-circle');
+    const tags = heroVisual.querySelectorAll('.floating-tag');
+    [mascot, circle, ...tags].forEach((el) => el && el.classList.add('parallax-layer'));
+
+    heroVisual.addEventListener('mousemove', (e) => {
+      const rect = heroVisual.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      if (mascot) mascot.style.transform = `translate(${x * 24}px, ${y * 24}px) scale(1.02)`;
+      if (circle) circle.style.transform = `translate(${x * -16}px, ${y * -16}px)`;
+      tags.forEach((t, i) => {
+        const depth = (i + 1) * 12;
+        t.style.transform = `translate(${x * depth}px, ${y * depth}px)`;
+      });
+    });
+    heroVisual.addEventListener('mouseleave', () => {
+      if (mascot) mascot.style.transform = '';
+      if (circle) circle.style.transform = '';
+      tags.forEach((t) => (t.style.transform = ''));
+    });
+  }
+
+  // ========== 3D Tilt Cards ==========
+  const tiltEls = document.querySelectorAll('[data-tilt]');
+  if (isFinePointer && window.innerWidth > 880) {
+    tiltEls.forEach((el) => {
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        const rotY = x * 12;
+        const rotX = -y * 10;
+        el.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-6px)`;
+      });
+      el.addEventListener('mouseleave', () => {
+        el.style.transform = 'perspective(900px) rotateX(0) rotateY(0)';
+      });
+    });
+  }
+
+  // ========== Animated Counter ==========
+  const counters = document.querySelectorAll('[data-counter]');
+  const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+  const animateCount = (el) => {
+    const target = parseInt(el.getAttribute('data-counter'), 10) || 0;
+    const duration = 1800;
+    const start = performance.now();
+    const formatNum = (n) => {
+      // For values >= 1000, show as comma-separated
+      if (target >= 1000) return Math.floor(n).toLocaleString('en-US');
+      return Math.floor(n).toString();
+    };
+    const tick = (now) => {
+      const elapsed = now - start;
+      const t = Math.min(elapsed / duration, 1);
+      const val = easeOut(t) * target;
+      el.textContent = formatNum(val);
+      if (t < 1) requestAnimationFrame(tick);
+      else el.textContent = formatNum(target);
+    };
+    requestAnimationFrame(tick);
+  };
+  const counterIO = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        animateCount(entry.target);
+        counterIO.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  counters.forEach((c) => counterIO.observe(c));
+
+  // Make stat numbers in hero animate too (they don't have data-counter — wrap them)
+  document.querySelectorAll('.hero-stats .stat-num').forEach((el) => {
+    const text = el.firstChild && el.firstChild.textContent;
+    if (!text) return;
+    const numeric = parseInt(text.replace(/[^0-9]/g, ''), 10);
+    if (!isNaN(numeric)) {
+      const span = document.createElement('span');
+      span.setAttribute('data-counter', String(numeric));
+      span.textContent = '0';
+      el.firstChild.replaceWith(span);
+      counterIO.observe(span);
+    }
+  });
 </script>
 </body>
 </html>
