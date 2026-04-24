@@ -395,11 +395,84 @@
   .ft-3 { bottom: 6%; left: 4%; animation: bob 5.5s ease-in-out infinite -3s; }
   .ft-3 .emoji-circle { background: var(--coral); }
 
+  /* Japanese celebration badge (祝) — inspired by anytimefitness "祝！会員100万人突破" banner */
+  .celebrate-badge {
+    position: absolute;
+    top: -4%;
+    right: -6%;
+    width: 124px;
+    height: 124px;
+    border-radius: 50%;
+    background: var(--orange);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    transform: rotate(-8deg);
+    box-shadow: 0 12px 36px rgba(242, 107, 31, 0.35);
+    z-index: 3;
+    padding: 6px;
+    animation: bob 4s ease-in-out infinite;
+  }
+  .celebrate-badge::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: repeating-conic-gradient(from 0deg, var(--orange) 0deg 14deg, transparent 14deg 22deg);
+    z-index: -1;
+    animation: celebrate-spin 24s linear infinite;
+  }
+  .celebrate-kanji {
+    position: relative;
+    z-index: 1;
+    font-family: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
+    font-weight: 900;
+    font-size: 20px;
+    line-height: 1;
+    margin-bottom: 2px;
+    letter-spacing: 0.02em;
+  }
+  .celebrate-main {
+    position: relative;
+    z-index: 1;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .celebrate-main small {
+    font-size: 12px;
+    font-weight: 700;
+    margin-left: 2px;
+  }
+  .celebrate-sub {
+    position: relative;
+    z-index: 1;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 7px;
+    letter-spacing: 0.12em;
+    margin-top: 4px;
+    opacity: 0.92;
+  }
+  @keyframes celebrate-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
   @media (max-width: 880px) {
     .hero-grid { grid-template-columns: 1fr; gap: 40px; }
     .hero-visual { max-width: 400px; margin: 0 auto; }
     .hero-stats { gap: 24px; }
     .stat-num { font-size: 28px; }
+    .celebrate-badge { width: 96px; height: 96px; top: -2%; right: -2%; }
+    .celebrate-kanji { font-size: 16px; }
+    .celebrate-main { font-size: 20px; }
+    .celebrate-sub { font-size: 6px; }
   }
 
   /* ============ Marquee ============ */
@@ -530,16 +603,64 @@
   .section-head {
     text-align: center;
     margin-bottom: 80px;
+    position: relative;
   }
   .section-head h2 {
     font-size: clamp(34px, 4.5vw, 56px);
     margin: 16px 0 16px;
+    position: relative;
+    z-index: 1;
+  }
+  /* Big outlined English ghost headline behind h2 (inspired by ultrasocial / ihack) */
+  .section-head h2[data-en]::before {
+    content: attr(data-en);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -58%);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: clamp(90px, 14vw, 200px);
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(242, 107, 31, 0.16);
+    letter-spacing: -0.05em;
+    white-space: nowrap;
+    z-index: -1;
+    pointer-events: none;
+    line-height: 1;
   }
   .section-head p {
     color: var(--ink-2);
     font-size: 16px;
     max-width: 560px;
     margin: 0 auto;
+  }
+
+  /* Inline ghost EN (for non-centered section heads like about/company/contact) */
+  .ghost-en {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: clamp(56px, 9vw, 120px);
+    color: transparent;
+    -webkit-text-stroke: 1.4px rgba(242, 107, 31, 0.18);
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+    margin: 10px 0 -4px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* Subtle dot-grid backdrop (inspired by bibin / twinplanet pattern accents) */
+  .dot-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(242, 107, 31, 0.12) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+    opacity: 0.55;
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
   }
   .services-grid {
     display: grid;
@@ -588,6 +709,27 @@
     margin-bottom: 16px;
     position: relative;
     z-index: 1;
+  }
+  /* BIG background number like iHack (01/02/03/04) */
+  .service-card[data-num]::after {
+    content: attr(data-num);
+    position: absolute;
+    top: 20px;
+    right: 26px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 92px;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(242, 107, 31, 0.18);
+    letter-spacing: -0.04em;
+    pointer-events: none;
+    z-index: 0;
+    transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1);
+  }
+  .service-card[data-num]:hover::after {
+    transform: scale(1.1) rotate(-3deg);
+    -webkit-text-stroke-color: rgba(242, 107, 31, 0.32);
   }
   .service-icon {
     width: 64px;
@@ -776,6 +918,114 @@
     .works-grid { grid-template-columns: 1fr; }
   }
 
+  /* ============ News / Press (inspired by bitstar.tokyo card grid) ============ */
+  .news {
+    background: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+  .news > .container { position: relative; z-index: 1; }
+  .news-list {
+    display: flex;
+    flex-direction: column;
+    max-width: 920px;
+    margin: 0 auto;
+    border-top: 1px solid var(--line);
+  }
+  .news-card {
+    display: grid;
+    grid-template-columns: 220px 1fr 40px;
+    gap: 28px;
+    align-items: center;
+    padding: 28px 8px;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    transition: background 0.3s ease, transform 0.3s ease, padding 0.3s ease;
+    position: relative;
+  }
+  .news-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--orange);
+    transition: width 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
+  }
+  .news-card:hover {
+    background: #fff;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .news-card:hover::before { width: 12px; }
+  .news-card:hover .news-arrow {
+    background: var(--orange);
+    color: #fff;
+    transform: translate(4px, -4px);
+  }
+  .news-meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+  }
+  .news-date {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--ink-2);
+    letter-spacing: 0.04em;
+  }
+  .news-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    line-height: 1.4;
+  }
+  .news-tag.tag-press   { background: rgba(242, 107, 31, 0.12); color: #d15a14; }
+  .news-tag.tag-event   { background: rgba(184, 224, 122, 0.22); color: #527f23; }
+  .news-tag.tag-media   { background: rgba(255, 209, 102, 0.24); color: #a07500; }
+  .news-tag.tag-release { background: rgba(255, 173, 173, 0.3); color: #c85050; }
+  .news-title {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.65;
+    margin: 0;
+    color: var(--ink);
+  }
+  .news-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid var(--line);
+    color: var(--orange);
+    transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
+    flex-shrink: 0;
+  }
+  .news-cta {
+    text-align: center;
+    margin-top: 48px;
+  }
+  @media (max-width: 720px) {
+    .news-card {
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto auto;
+      gap: 12px 16px;
+    }
+    .news-meta { grid-column: 1 / -1; }
+    .news-title { font-size: 15px; }
+    .news-arrow { grid-column: 2; grid-row: 2; align-self: start; }
+  }
+
   /* ============ Why Us ============ */
   .why {
     background: var(--ink);
@@ -810,6 +1060,11 @@
     color: #fff;
     font-size: clamp(34px, 4.5vw, 56px);
     margin: 16px 0 60px;
+  }
+  .why .section-head h2[data-en]::before {
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.14);
+    top: 45%;
+    transform: translate(-50%, -52%);
   }
   .why h2 .accent {
     background: linear-gradient(135deg, var(--orange-soft), var(--yellow));
@@ -1407,6 +1662,7 @@
       <li><a href="#services">Service</a></li>
       <li><a href="#brands">Brands</a></li>
       <li><a href="#works">Works</a></li>
+      <li><a href="#news">News</a></li>
       <li><a href="#company">Company</a></li>
     </ul>
     <a href="#contact" class="btn btn-primary nav-cta">
@@ -1472,6 +1728,11 @@
       <div class="hero-visual reveal">
         <div class="hero-circle"></div>
         <img src="assets/mascot.png" alt="Sunnyway Mascot" class="hero-mascot" />
+        <div class="celebrate-badge" aria-hidden="true">
+          <span class="celebrate-kanji">祝</span>
+          <span class="celebrate-main">3,000<small>名</small></span>
+          <span class="celebrate-sub">INFLUENCERS NETWORK</span>
+        </div>
         <div class="floating-tag ft-1">
           <div class="emoji-circle">SNS</div>
           Casting
@@ -1515,6 +1776,7 @@
     <div class="about-grid">
       <div class="reveal">
         <span class="eyebrow">About Us</span>
+        <span class="ghost-en">ABOUT</span>
         <h2>韓国の素敵を、<br /><span class="underline">日本に届ける。</span></h2>
         <div class="about-text">
           <p>株式会社Sunnyway（サニーウェイ）は、韓国コスメ・ビューティーブランドの日本市場進出をトータルサポートするマーケティング会社です。</p>
@@ -1549,11 +1811,11 @@
   <div class="container">
     <div class="section-head reveal">
       <span class="eyebrow">Our Services</span>
-      <h2>What we do.</h2>
+      <h2 data-en="SERVICES">What we do.</h2>
       <p>ブランド戦略から日々のSNS運用まで、ビューティーマーケティングのすべてを。</p>
     </div>
     <div class="services-grid">
-      <div class="service-card reveal" data-tilt>
+      <div class="service-card reveal" data-tilt data-num="01">
         <div class="service-num">SERVICE / 01</div>
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1567,7 +1829,7 @@
           <span>戦略立案</span><span>ローンチ支援</span><span>市場調査</span>
         </div>
       </div>
-      <div class="service-card reveal" data-tilt>
+      <div class="service-card reveal" data-tilt data-num="02">
         <div class="service-num">SERVICE / 02</div>
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1583,7 +1845,7 @@
           <span>YouTuber</span><span>Instagrammer</span><span>TikToker</span>
         </div>
       </div>
-      <div class="service-card reveal" data-tilt>
+      <div class="service-card reveal" data-tilt data-num="03">
         <div class="service-num">SERVICE / 03</div>
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1599,7 +1861,7 @@
           <span>アカウント運用</span><span>動画制作</span><span>分析</span>
         </div>
       </div>
-      <div class="service-card reveal" data-tilt>
+      <div class="service-card reveal" data-tilt data-num="04">
         <div class="service-num">SERVICE / 04</div>
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1623,7 +1885,7 @@
   <div class="container">
     <div class="section-head reveal">
       <span class="eyebrow">Partner Brands</span>
-      <h2>Brands we love.</h2>
+      <h2 data-en="BRANDS">Brands we love.</h2>
       <p>世界中で愛される韓国ビューティーブランドのパートナーとして、日本市場での成長をご支援しています。</p>
     </div>
     <div class="brands-grid">
@@ -1677,7 +1939,7 @@
     <div class="bento-head reveal">
       <div>
         <span class="eyebrow">Highlights</span>
-        <h2>数字で見る、<span class="ko-accent">Sunnyway</span>。</h2>
+        <h2 data-en="NUMBERS">数字で見る、<span class="ko-accent">Sunnyway</span>。</h2>
       </div>
       <a href="#works" class="arrow-link">
         VIEW WORKS
@@ -1741,7 +2003,7 @@
   <div class="container">
     <div class="section-head reveal">
       <span class="eyebrow">Selected Works</span>
-      <h2>Recent projects.</h2>
+      <h2 data-en="WORKS">Recent projects.</h2>
       <p>これまでに手がけた、選りすぐりのプロジェクト事例。</p>
     </div>
     <div class="works-grid">
@@ -1797,12 +2059,72 @@
   </div>
 </section>
 
+<!-- ============ NEWS / PRESS RELEASES ============ -->
+<section id="news" class="news">
+  <div class="dot-grid-bg"></div>
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">News &amp; Press</span>
+      <h2 data-en="NEWS">最新のお知らせ。</h2>
+      <p>プレスリリース、メディア掲載、イベント情報をお届けします。</p>
+    </div>
+    <div class="news-list">
+      <a href="#" class="news-card reveal">
+        <div class="news-meta">
+          <time class="news-date">2026.04.18</time>
+          <span class="news-tag tag-press">PRESS</span>
+        </div>
+        <h3 class="news-title">韓国発ヴィーガンコスメブランドの日本初上陸をプロデュース。先行販売で売上目標の 240% を達成しました。</h3>
+        <span class="news-arrow" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        </span>
+      </a>
+      <a href="#" class="news-card reveal">
+        <div class="news-meta">
+          <time class="news-date">2026.03.29</time>
+          <span class="news-tag tag-event">EVENT</span>
+        </div>
+        <h3 class="news-title">渋谷 PARCO にて、韓国コスメ合同ポップアップストア「K-BEAUTY LAB vol.3」を開催しました。</h3>
+        <span class="news-arrow" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        </span>
+      </a>
+      <a href="#" class="news-card reveal">
+        <div class="news-meta">
+          <time class="news-date">2026.02.14</time>
+          <span class="news-tag tag-media">MEDIA</span>
+        </div>
+        <h3 class="news-title">日経クロストレンド「Z世代×韓国コスメ」特集に、代表 ソ・ミナのインタビューが掲載されました。</h3>
+        <span class="news-arrow" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        </span>
+      </a>
+      <a href="#" class="news-card reveal">
+        <div class="news-meta">
+          <time class="news-date">2026.01.08</time>
+          <span class="news-tag tag-release">RELEASE</span>
+        </div>
+        <h3 class="news-title">ビューティーインフルエンサーネットワーク、登録者数 3,000 名を突破しました。</h3>
+        <span class="news-arrow" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        </span>
+      </a>
+    </div>
+    <div class="news-cta reveal">
+      <a href="#" class="btn btn-outline">
+        すべてのお知らせを見る
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- ============ WHY US ============ -->
 <section class="why">
   <div class="container">
     <div class="reveal">
       <span class="eyebrow">Why Sunnyway</span>
-      <h2>Sunnyway が<br />選ばれる<span class="accent">3つの理由</span>。</h2>
+      <h2 data-en="WHY US">Sunnyway が<br />選ばれる<span class="accent">3つの理由</span>。</h2>
     </div>
     <div class="why-grid">
       <div class="why-card reveal">
@@ -1830,6 +2152,7 @@
     <div class="company-wrap">
       <div class="reveal">
         <span class="eyebrow">Company</span>
+        <span class="ghost-en">COMPANY</span>
         <h2>会社概要</h2>
         <p>韓国コスメと日本市場をつなぐ、私たちのプロフィール。</p>
       </div>
@@ -1869,6 +2192,7 @@
     <div class="contact-card reveal">
       <div class="content">
         <span class="eyebrow">Get in touch</span>
+        <span class="ghost-en">CONTACT</span>
         <h2>一緒に、サプライズを<br />起こしませんか？</h2>
         <p>ブランドの日本展開、SNSマーケティング、インフルエンサー施策など、まずはお気軽にご相談ください。</p>
         <div class="contact-actions">
