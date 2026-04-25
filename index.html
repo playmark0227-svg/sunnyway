@@ -873,25 +873,55 @@
     aspect-ratio: 4 / 3;
     position: relative;
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 900;
-    font-size: 48px;
-    color: #fff;
+    display: block;
+    background: var(--cream-2);
   }
-  .work-card:nth-child(1) .work-thumb { background: linear-gradient(135deg, var(--orange), var(--coral)); }
-  .work-card:nth-child(2) .work-thumb { background: linear-gradient(135deg, var(--pink), var(--peach)); color: var(--ink); }
-  .work-card:nth-child(3) .work-thumb { background: linear-gradient(135deg, var(--green), var(--green-soft)); }
-  .work-card:nth-child(4) .work-thumb { background: linear-gradient(135deg, var(--coral), var(--pink)); }
-  .work-card:nth-child(5) .work-thumb { background: linear-gradient(135deg, var(--yellow), var(--orange)); color: var(--ink); }
-  .work-card:nth-child(6) .work-thumb { background: linear-gradient(135deg, var(--ink), var(--ink-2)); }
+  .work-thumb img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.9s cubic-bezier(0.22, 0.8, 0.26, 1), filter 0.6s ease;
+    display: block;
+  }
+  .work-card:hover .work-thumb img {
+    transform: scale(1.08);
+    filter: saturate(1.05);
+  }
+  /* Color-tinted gradient overlay matched to original card themes */
   .work-thumb::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), transparent 60%);
+    background: linear-gradient(135deg, rgba(242,107,31,0.15), rgba(255,127,127,0.08));
+    z-index: 1;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+  .work-card:nth-child(2) .work-thumb::before { background: linear-gradient(135deg, rgba(255,173,173,0.18), rgba(255,209,158,0.1)); }
+  .work-card:nth-child(3) .work-thumb::before { background: linear-gradient(135deg, rgba(184,224,122,0.16), rgba(207,237,142,0.08)); }
+  .work-card:nth-child(4) .work-thumb::before { background: linear-gradient(135deg, rgba(255,127,127,0.18), rgba(255,173,173,0.08)); }
+  .work-card:nth-child(5) .work-thumb::before { background: linear-gradient(135deg, rgba(255,209,102,0.16), rgba(242,107,31,0.08)); }
+  .work-card:nth-child(6) .work-thumb::before { background: linear-gradient(135deg, rgba(26,26,46,0.18), rgba(106,114,138,0.08)); }
+  /* Number badge in corner (replaces big center number) */
+  .work-thumb::after {
+    content: attr(data-num);
+    position: absolute;
+    top: 14px;
+    left: 16px;
+    z-index: 2;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 14px;
+    color: #fff;
+    letter-spacing: 0.1em;
+    background: rgba(26,26,46,0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    padding: 5px 11px;
+    border-radius: 999px;
+    line-height: 1;
   }
   .work-info { padding: 24px; }
   .work-cat {
@@ -2536,7 +2566,9 @@
     </div>
     <div class="works-grid">
       <div class="work-card reveal" data-tilt>
-        <div class="work-thumb">01</div>
+        <div class="work-thumb" data-num="WORK / 01">
+          <img src="assets/works/01-lip.jpg" alt="メイクアップ中の女性のリップ" loading="lazy" />
+        </div>
         <div class="work-info">
           <span class="work-cat">CASTING / SNS</span>
           <h4>新作リップティント日本ローンチ</h4>
@@ -2544,7 +2576,9 @@
         </div>
       </div>
       <div class="work-card reveal" data-tilt>
-        <div class="work-thumb">02</div>
+        <div class="work-thumb" data-num="WORK / 02">
+          <img src="assets/works/02-skincare.jpg" alt="スキンケアプロダクトイメージ" loading="lazy" />
+        </div>
         <div class="work-info">
           <span class="work-cat">BRAND MARKETING</span>
           <h4>スキンケアブランドリブランディング</h4>
@@ -2552,7 +2586,9 @@
         </div>
       </div>
       <div class="work-card reveal" data-tilt>
-        <div class="work-thumb">03</div>
+        <div class="work-thumb" data-num="WORK / 03">
+          <img src="assets/works/03-cushion.jpg" alt="メイクブラシとパウダー" loading="lazy" />
+        </div>
         <div class="work-info">
           <span class="work-cat">INFLUENCER PR</span>
           <h4>クッションファンデPRキャンペーン</h4>
@@ -2560,7 +2596,9 @@
         </div>
       </div>
       <div class="work-card reveal" data-tilt>
-        <div class="work-thumb">04</div>
+        <div class="work-thumb" data-num="WORK / 04">
+          <img src="assets/works/04-popup.jpg" alt="ヘアスタイルのモデル" loading="lazy" />
+        </div>
         <div class="work-info">
           <span class="work-cat">EVENT / POPUP</span>
           <h4>渋谷ポップアップストア企画</h4>
@@ -2568,7 +2606,9 @@
         </div>
       </div>
       <div class="work-card reveal" data-tilt>
-        <div class="work-thumb">05</div>
+        <div class="work-thumb" data-num="WORK / 05">
+          <img src="assets/works/05-sns.jpg" alt="スマートフォンとSNS画面" loading="lazy" />
+        </div>
         <div class="work-info">
           <span class="work-cat">SNS PRODUCTION</span>
           <h4>公式Instagram運用代行</h4>
@@ -2576,7 +2616,9 @@
         </div>
       </div>
       <div class="work-card reveal" data-tilt>
-        <div class="work-thumb">06</div>
+        <div class="work-thumb" data-num="WORK / 06">
+          <img src="assets/works/06-video.jpg" alt="動画編集タイムライン" loading="lazy" />
+        </div>
         <div class="work-info">
           <span class="work-cat">ADVERTISING</span>
           <h4>YouTube広告クリエイティブ制作</h4>
