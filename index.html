@@ -3319,32 +3319,7 @@
     });
   })();
 
-  // ---------- Marquee velocity modulation on scroll ----------
-  (() => {
-    if (REDUCE_MOTION) return;
-    const track = document.querySelector('.marquee-track');
-    if (!track) return;
-    let lastScroll = window.scrollY;
-    let baseDuration = 25; // matches CSS default, we'll estimate
-    const cs = getComputedStyle(track);
-    const dur = parseFloat(cs.animationDuration);
-    if (!isNaN(dur) && dur > 0) baseDuration = dur;
-    let targetScale = 1;
-    let currentScale = 1;
-    window.addEventListener('scroll', () => {
-      const dy = Math.abs(window.scrollY - lastScroll);
-      lastScroll = window.scrollY;
-      // dy is pixels scrolled — bigger = faster marquee
-      targetScale = Math.min(3.2, 1 + dy * 0.08);
-    }, { passive: true });
-    const loop = () => {
-      currentScale += (targetScale - currentScale) * 0.08;
-      targetScale += (1 - targetScale) * 0.05; // decay back to 1
-      track.style.animationDuration = (baseDuration / currentScale) + 's';
-      requestAnimationFrame(loop);
-    };
-    loop();
-  })();
+  // ---------- Marquee runs at constant CSS-defined speed (scroll-velocity boost removed per user request) ----------
 
   // ---------- Section parallax for hero visual + mascot + bento-bg ----------
   (() => {
