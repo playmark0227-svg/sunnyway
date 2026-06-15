@@ -20,6 +20,7 @@
 <meta property="og:title" content="株式会社Sunnyway | 韓国コスメ・ビューティーマーケティング" />
 <meta property="og:description" content="韓国コスメ・ビューティーブランドの日本マーケティングを支援。インフルエンサーキャスティング、SNS運用、ブランドPRをワンストップでサポートします。" />
 <meta property="og:image" content="https://playmark0227-svg.github.io/sunnyway/assets/og-card.png" />
+<meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="株式会社Sunnyway — 韓国の素敵を、日本に届ける。" />
@@ -35,7 +36,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preload" as="image" href="assets/mascot.png" fetchpriority="high" />
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" />
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" /></noscript>
 
 <!-- Structured data: Organization -->
 <script type="application/ld+json">
@@ -50,13 +52,23 @@
   "description": "韓国コスメ・ビューティーブランドの日本マーケティングを支援するキャスティング・PR会社。インフルエンサーキャスティング、SNS運用、ブランドPRをワンストップで提供。",
   "slogan": "サプライズを起こし続けよう。",
   "knowsAbout": ["韓国コスメ", "K-Beauty", "インフルエンサーマーケティング", "SNS運用", "ブランドPR", "広告運用"],
+  "foundingDate": "2018",
+  "email": "info@sunnyway.jp",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "東京都",
+    "addressCountry": "JP"
+  },
   "areaServed": "JP"
 }
 </script>
 <style>
   /* ============ Reset & Base ============ */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  html { -webkit-font-smoothing: antialiased; }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
   body {
     font-family: 'Noto Sans JP', 'Zen Kaku Gothic New', sans-serif;
     color: var(--ink);
@@ -64,15 +76,16 @@
     line-height: 1.7;
     overflow-x: hidden;
   }
-  img { max-width: 100%; display: block; }
+  img { max-width: 100%; height: auto; display: block; }
   a { color: inherit; text-decoration: none; }
   button { font: inherit; cursor: pointer; border: none; background: none; }
 
   /* ============ A11y: keyboard focus + skip link ============ */
   :focus-visible {
-    outline: 3px solid var(--orange);
+    outline: 3px solid var(--ink);
     outline-offset: 3px;
     border-radius: 6px;
+    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.9);
   }
   :focus:not(:focus-visible) { outline: none; }
   .skip-link {
@@ -92,7 +105,7 @@
   }
   .skip-link:focus {
     transform: translateY(0);
-    outline: 3px solid var(--orange);
+    outline: 3px solid #fff;
     outline-offset: 2px;
   }
 
@@ -100,6 +113,8 @@
     --cream: #FFFAF3;
     --cream-2: #FFF3E6;
     --orange: #F26B1F;
+    --orange-rgb: 242, 107, 31;
+    --orange-text: #BB4D0F; /* AA-safe orange for small text: ~5:1 on cream/white */
     --orange-soft: #FF8C42;
     --peach: #FFD9C2;
     --coral: #FF6B7D;
@@ -113,6 +128,7 @@
     --shadow: 0 20px 60px rgba(242, 107, 31, 0.12);
     --shadow-soft: 0 10px 40px rgba(26, 26, 46, 0.08);
     --radius: 24px;
+    --ease: cubic-bezier(0.22, 0.8, 0.26, 1);
     --max: 1200px;
   }
 
@@ -131,7 +147,7 @@
     font-size: 13px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--orange);
+    color: var(--orange-text);
     display: inline-flex;
     align-items: center;
     gap: 12px;
@@ -296,7 +312,8 @@
       box-shadow: 0 24px 48px rgba(26, 26, 46, 0.14);
       border-top: 1px solid var(--line);
       z-index: 95;
-      max-height: calc(100vh - 80px);
+      max-height: calc(100vh - 80px); /* fallback for browsers without dvh */
+      max-height: calc(100dvh - 80px); /* dynamic viewport: accounts for iOS toolbars */
       overflow-y: auto;
       animation: menu-drop 0.42s cubic-bezier(0.22, 0.8, 0.26, 1) both;
     }
@@ -373,7 +390,7 @@
   .hero-grid {
     display: grid;
     grid-template-columns: 1.2fr 1fr;
-    gap: 60px;
+    gap: clamp(32px, 5vw, 60px);
     align-items: center;
     position: relative;
     z-index: 1;
@@ -389,7 +406,7 @@
     font-weight: 700;
     font-size: 12px;
     letter-spacing: 0.12em;
-    color: var(--orange);
+    color: var(--orange-text);
     box-shadow: var(--shadow-soft);
     margin-bottom: 28px;
   }
@@ -612,6 +629,17 @@
     .celebrate-main { font-size: 20px; }
     .celebrate-sub { font-size: 6px; }
   }
+  /* Keep hero floating tags + badge inside the visual box on small phones (.hero clips overflow) */
+  @media (max-width: 560px) {
+    .ft-1 { left: 0; }
+    .ft-2 { right: 0; }
+    .ft-3 { left: 2%; bottom: 4%; }
+    .floating-tag { padding: 8px 12px; font-size: 11px; gap: 6px; }
+    .floating-tag .emoji-circle { width: 26px; height: 26px; font-size: 12px; }
+    .celebrate-badge { width: 80px; height: 80px; top: 0; right: 0; }
+    .celebrate-kanji { font-size: 14px; }
+    .celebrate-main { font-size: 17px; }
+  }
 
   /* ============ Marquee ============ */
   .marquee {
@@ -654,7 +682,7 @@
   .about-grid {
     display: grid;
     grid-template-columns: 1fr 1.3fr;
-    gap: 80px;
+    gap: clamp(36px, 6vw, 80px);
     align-items: center;
   }
   .about h2 {
@@ -704,7 +732,7 @@
     color: #fff;
     font-family: 'Montserrat', sans-serif;
   }
-  .about-card h4 {
+  .about-card h3 {
     font-size: 18px;
     margin-bottom: 8px;
   }
@@ -842,7 +870,7 @@
     font-family: 'Montserrat', sans-serif;
     font-size: 13px;
     font-weight: 700;
-    color: var(--orange);
+    color: var(--orange-text);
     letter-spacing: 0.15em;
     margin-bottom: 16px;
     position: relative;
@@ -891,7 +919,7 @@
   .service-card .jp {
     font-family: 'Zen Kaku Gothic New', sans-serif;
     font-size: 14px;
-    color: var(--orange);
+    color: var(--orange-text);
     font-weight: 700;
     display: block;
     margin-bottom: 8px;
@@ -928,6 +956,7 @@
   .brands {
     background: var(--cream);
     position: relative;
+    overflow: hidden;
   }
   .brands-grid {
     display: grid;
@@ -988,6 +1017,8 @@
   /* ============ Works ============ */
   .works {
     background: linear-gradient(180deg, var(--cream-2) 0%, var(--cream) 100%);
+    position: relative;
+    overflow: hidden;
   }
   .works-grid {
     display: grid;
@@ -1066,11 +1097,11 @@
     font-family: 'Montserrat', sans-serif;
     font-size: 11px;
     font-weight: 700;
-    color: var(--orange);
+    color: var(--orange-text);
     letter-spacing: 0.12em;
     text-transform: uppercase;
   }
-  .work-info h4 {
+  .work-info h3 {
     font-size: 18px;
     margin: 8px 0 6px;
     line-height: 1.4;
@@ -1156,10 +1187,10 @@
     letter-spacing: 0.16em;
     line-height: 1.4;
   }
-  .news-tag.tag-press   { background: rgba(242, 107, 31, 0.12); color: #d15a14; }
-  .news-tag.tag-event   { background: rgba(184, 224, 122, 0.22); color: #527f23; }
-  .news-tag.tag-media   { background: rgba(255, 209, 102, 0.24); color: #a07500; }
-  .news-tag.tag-release { background: rgba(255, 173, 173, 0.3); color: #c85050; }
+  .news-tag.tag-press   { background: rgba(242, 107, 31, 0.12); color: #A8430E; }
+  .news-tag.tag-event   { background: rgba(184, 224, 122, 0.22); color: #3F6118; }
+  .news-tag.tag-media   { background: rgba(255, 209, 102, 0.24); color: #7A5600; }
+  .news-tag.tag-release { background: rgba(255, 173, 173, 0.3); color: #A53B3B; }
   .news-title {
     font-size: 16px;
     font-weight: 600;
@@ -1182,6 +1213,13 @@
   .news-cta {
     text-align: center;
     margin-top: 48px;
+  }
+  /* Tablet band: flex the date column so titles aren't squeezed (721-880px) */
+  @media (max-width: 880px) {
+    .news-card {
+      grid-template-columns: minmax(150px, 190px) 1fr 40px;
+      gap: 20px;
+    }
   }
   @media (max-width: 720px) {
     .news-card {
@@ -1282,7 +1320,7 @@
   .company-wrap {
     display: grid;
     grid-template-columns: 1fr 1.3fr;
-    gap: 80px;
+    gap: clamp(36px, 6vw, 80px);
     align-items: start;
   }
   .company h2 {
@@ -1309,7 +1347,7 @@
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
     font-size: 12px;
-    color: var(--orange);
+    color: var(--orange-text);
     letter-spacing: 0.1em;
     text-transform: uppercase;
   }
@@ -1329,7 +1367,7 @@
     padding-bottom: 60px;
   }
   .contact-card {
-    background: linear-gradient(135deg, var(--orange) 0%, var(--coral) 100%);
+    background: linear-gradient(135deg, #C2510F 0%, #C94257 100%);
     border-radius: 40px;
     padding: 80px 60px;
     position: relative;
@@ -1357,9 +1395,9 @@
   }
   .contact-card .content { position: relative; z-index: 1; }
   .contact-card .eyebrow {
-    color: rgba(255, 255, 255, 0.9);
+    color: #fff;
   }
-  .contact-card .eyebrow::before { background: rgba(255, 255, 255, 0.9); }
+  .contact-card .eyebrow::before { background: #fff; }
   .contact-card h2 {
     color: #fff;
     font-size: clamp(36px, 5vw, 64px);
@@ -1367,7 +1405,7 @@
     line-height: 1.1;
   }
   .contact-card p {
-    color: rgba(255, 255, 255, 0.9);
+    color: #fff;
     font-size: 16px;
     max-width: 480px;
     margin: 0 auto 36px;
@@ -1388,14 +1426,14 @@
     color: #fff;
   }
   .contact-card .btn-outline {
-    background: transparent;
-    color: #fff;
-    border-color: rgba(255, 255, 255, 0.6);
+    background: #fff;
+    color: #C2510F;
+    border-color: #fff;
   }
   .contact-card .btn-outline:hover {
-    background: #fff;
-    color: var(--orange);
-    border-color: #fff;
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
   }
   @media (max-width: 768px) {
     .contact-card { padding: 60px 30px; border-radius: 28px; }
@@ -1410,7 +1448,7 @@
   .footer-grid {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 60px;
+    gap: clamp(36px, 4vw, 60px);
     margin-bottom: 50px;
   }
   .footer-brand .logo { margin-bottom: 16px; }
@@ -1420,23 +1458,25 @@
     line-height: 1.85;
     max-width: 320px;
   }
-  .footer h5 {
+  .footer h3 {
     font-family: 'Montserrat', sans-serif;
     font-size: 12px;
     font-weight: 800;
-    color: var(--orange);
+    color: var(--orange-text);
     letter-spacing: 0.12em;
     text-transform: uppercase;
     margin-bottom: 18px;
   }
   .footer ul { list-style: none; }
-  .footer ul li { margin-bottom: 10px; }
+  .footer ul li { margin-bottom: 4px; }
   .footer ul a {
     font-size: 14px;
     color: var(--ink-2);
     transition: color 0.2s;
+    display: inline-block;
+    padding: 8px 0;
   }
-  .footer ul a:hover { color: var(--orange); }
+  .footer ul a:hover { color: var(--orange-text); }
   .footer-bottom {
     padding-top: 30px;
     border-top: 1px solid var(--line);
@@ -1478,6 +1518,7 @@
   @media (max-width: 880px) {
     .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
     .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+    .footer-social a { width: 44px; height: 44px; } /* min touch target */
   }
   @media (max-width: 480px) {
     .footer-grid { grid-template-columns: 1fr; }
@@ -1500,11 +1541,14 @@
     top: 0;
     left: 0;
     height: 3px;
-    width: 0%;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left center;
     background: linear-gradient(90deg, var(--orange), var(--coral), var(--yellow));
     z-index: 200;
     box-shadow: 0 2px 12px rgba(242, 107, 31, 0.5);
-    transition: width 0.08s linear;
+    transition: transform 0.1s linear;
+    will-change: transform;
     border-radius: 0 4px 4px 0;
   }
 
@@ -1540,13 +1584,6 @@
     height: 72px;
     background: rgba(242, 107, 31, 0.18);
     border-color: var(--orange);
-  }
-  .cursor-ring.is-text {
-    width: 4px;
-    height: 28px;
-    border-radius: 2px;
-    background: #fff;
-    border-color: transparent;
   }
   body.cursor-active { cursor: none; }
   body.cursor-active a, body.cursor-active button, body.cursor-active .btn { cursor: none; }
@@ -1588,7 +1625,10 @@
     transform-style: preserve-3d;
     transform: perspective(900px) rotateX(0) rotateY(0);
     transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1);
-    will-change: transform;
+  }
+  /* Only reserve a compositor layer where tilt actually runs (matches the JS gate). */
+  @media (hover: hover) and (pointer: fine) and (min-width: 881px) {
+    [data-tilt] { will-change: transform; }
   }
   [data-tilt] > * {
     transform: translateZ(0);
@@ -1701,7 +1741,7 @@
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.15em;
-    color: var(--orange);
+    color: var(--orange-text);
     text-transform: uppercase;
   }
   .bento-cell .big-num {
@@ -1768,18 +1808,18 @@
   .bc-2 .marquee-mini .star { color: var(--orange); }
 
   .bc-3 { background: var(--green-soft); padding: 28px 22px; }
-  .bc-3 .label { color: #5a7d2a; }
+  .bc-3 .label { color: #3E5A18; }
   .bc-3 .big-num { color: #2d4d10; font-size: clamp(30px, 3.2vw, 44px); letter-spacing: -0.03em; white-space: nowrap; }
-  .bc-3 .desc { color: #4a6b1f; font-weight: 600; }
+  .bc-3 .desc { color: #3A5417; font-weight: 600; }
 
   .bc-4 { background: var(--yellow); }
-  .bc-4 .label { color: #946c00; }
+  .bc-4 .label { color: #6E5000; }
   .bc-4 .big-num { color: #5a4100; }
   .bc-4 .big-num .unit { color: #946c00; }
   .bc-4 .desc { color: #6d4f00; font-weight: 600; }
 
   .bc-5 { grid-column: span 2; background: linear-gradient(135deg, var(--pink), var(--peach)); }
-  .bc-5 .label { color: #b8456a; }
+  .bc-5 .label { color: #8C2C4C; }
   .bc-5 .big-num { color: var(--ink); }
   .bc-5 .desc { color: var(--ink-2); }
   .bc-5 .floating-emoji {
@@ -1823,7 +1863,7 @@
     justify-content: center;
     flex-direction: column;
     gap: 24px;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
   }
   .preloader.is-done {
     opacity: 0;
@@ -1959,51 +1999,14 @@
     display: inline-block;
     transform: translateY(110%) rotate(4deg);
     transition: transform 0.9s cubic-bezier(0.22, 0.8, 0.26, 1);
-    will-change: transform;
   }
   .split-ready .split-word > .split-inner {
     transform: translateY(0) rotate(0deg);
   }
 
-  /* -------- Generic reveal-stagger variants -------- */
-  .reveal-mask {
-    opacity: 1;
-    clip-path: inset(0 0 100% 0);
-    transition: clip-path 1s cubic-bezier(0.22, 0.8, 0.26, 1);
-  }
-  .reveal-mask.in {
-    clip-path: inset(0 0 0 0);
-  }
-  .reveal-from-left {
-    opacity: 0;
-    transform: translateX(-40px);
-    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 0.8, 0.26, 1);
-  }
-  .reveal-from-left.in {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  .reveal-scale {
-    opacity: 0;
-    transform: scale(0.85) rotate(-1deg);
-    transition: opacity 0.8s ease, transform 0.9s cubic-bezier(0.22, 0.8, 0.26, 1);
-  }
-  .reveal-scale.in {
-    opacity: 1;
-    transform: scale(1) rotate(0);
-  }
-
-  /* -------- Ghost EN scroll-drift -------- */
+  /* -------- Ghost EN scroll-drift (--ghost-x rewritten every scroll frame; no transition or it lags) -------- */
   .section-head h2[data-en]::before {
     transform: translate(calc(-50% + var(--ghost-x, 0px)), -58%);
-    transition: transform 0.2s linear;
-  }
-
-  /* -------- Magnetic wrapper hint (no layout change) -------- */
-  [data-magnetic] {
-    display: inline-block;
-    will-change: transform;
-    transition: transform 0.4s cubic-bezier(0.22, 0.8, 0.26, 1);
   }
 
   /* -------- Ripple on btn click -------- */
@@ -2107,11 +2110,9 @@
 
   /* -------- Work card: image mask scale + overlay rise -------- */
   .work-card { position: relative; overflow: hidden; }
-  .work-card .work-image,
   .work-card .work-thumb {
     transition: transform 0.9s cubic-bezier(0.22, 0.8, 0.26, 1);
   }
-  .work-card:hover .work-image,
   .work-card:hover .work-thumb {
     transform: scale(1.08);
   }
@@ -2198,12 +2199,6 @@
     transform: scaleX(1);
   }
 
-  /* -------- Parallax offset for sections with data-parallax -------- */
-  [data-parallax] {
-    will-change: transform;
-    transition: none;
-  }
-
   /* -------- Dynamic scroll hint -------- */
   .scroll-hint {
     position: absolute;
@@ -2263,29 +2258,6 @@
     font-variant-numeric: tabular-nums;
   }
 
-  /* -------- Link underline slide-in (footer + body links) -------- */
-  .link-slide {
-    position: relative;
-    display: inline-block;
-    overflow: hidden;
-  }
-  .link-slide::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    width: 100%;
-    height: 1px;
-    background: currentColor;
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.4s cubic-bezier(0.22, 0.8, 0.26, 1);
-  }
-  .link-slide:hover::after {
-    transform: scaleX(1);
-    transform-origin: left;
-  }
-
   /* -------- Service card spotlight on hover -------- */
   .service-card {
     position: relative;
@@ -2318,15 +2290,50 @@
     }
     .sparkle, .hero-spotlight, .grain-overlay { display: none !important; }
   }
+
+  /* -------- Lighten GPU-heavy effects on touch / small screens (battery + paint cost) -------- */
+  @media (hover: none), (max-width: 880px) {
+    .work-thumb::after {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: rgba(26, 26, 46, 0.8); /* bump opacity since blur no longer aids legibility */
+    }
+    .header {
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      background: rgba(255, 250, 243, 0.94);
+    }
+    .blob { filter: blur(36px); }
+    .blob-3 { display: none; }
+    .celebrate-badge::before { animation: none; }
+  }
+
+  /* -------- Cross-browser fallbacks (prevent invisible text where clip/stroke/blur unsupported) -------- */
+  @supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+    .hero h1 .accent, .hero h1 .accent .char, .bento-head h2 .ko-accent {
+      color: var(--orange); -webkit-text-fill-color: var(--orange);
+    }
+    .why h2 .accent, .why-num {
+      color: var(--orange-soft); -webkit-text-fill-color: var(--orange-soft);
+    }
+  }
+  @supports not ((-webkit-text-stroke: 1px black) or (text-stroke: 1px black)) {
+    .section-head h2[data-en]::before, .ghost-en, .service-card[data-num]::after {
+      color: rgba(242, 107, 31, 0.12);
+    }
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .header { background: rgba(255, 250, 243, 0.98); }
+  }
 </style>
 </head>
 <body>
 
-<a href="#top" class="skip-link">メインコンテンツへスキップ</a>
+<a href="#main" class="skip-link">メインコンテンツへスキップ</a>
 
 <!-- Preloader -->
 <div class="preloader" id="preloader" role="status" aria-live="polite">
-  <div class="preloader-logo">S</div>
+  <div class="preloader-logo" aria-hidden="true">S</div>
   <div class="preloader-label">Sunnyway loading</div>
   <div class="preloader-bar"></div>
 </div>
@@ -2342,7 +2349,7 @@
 <header class="header">
   <nav class="nav">
     <a href="#top" class="logo">
-      <img src="assets/logo.png" alt="Sunnyway" width="36" height="36" decoding="async" />
+      <img src="assets/logo.png" alt="" width="36" height="36" decoding="async" />
       Sunnyway
     </a>
     <ul class="nav-links" id="primaryNav">
@@ -2374,8 +2381,8 @@
 </header>
 
 <!-- ============ HERO ============ -->
-<main id="main">
-<section id="top" class="hero">
+<main id="main" tabindex="-1">
+<section id="top" class="hero" aria-label="メインビジュアル">
   <div class="hero-bg">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -2454,7 +2461,7 @@
 </section>
 
 <!-- ============ MARQUEE ============ -->
-<div class="marquee">
+<div class="marquee" aria-hidden="true">
   <div class="marquee-track">
     <div class="marquee-item">
       <span>K-BEAUTY MARKETING</span><span class="star">✦</span>
@@ -2474,12 +2481,12 @@
 </div>
 
 <!-- ============ ABOUT ============ -->
-<section id="about" class="about">
+<section id="about" class="about" aria-label="会社紹介">
   <div class="container">
     <div class="about-grid">
       <div class="reveal">
         <span class="eyebrow">About Us</span>
-        <span class="ghost-en">ABOUT</span>
+        <span class="ghost-en" aria-hidden="true">ABOUT</span>
         <h2>韓国の素敵を、<br /><span class="underline">日本に届ける。</span></h2>
         <div class="about-text">
           <p>株式会社Sunnyway（サニーウェイ）は、韓国コスメ・ビューティーブランドの日本市場進出をトータルサポートするマーケティング会社です。</p>
@@ -2491,17 +2498,17 @@
         <div class="about-bg-shape"></div>
         <div class="about-card ac-1">
           <div class="about-card-icon">01</div>
-          <h4>K-Beauty 専門</h4>
+          <h3>K-Beauty 専門</h3>
           <p>韓国コスメ業界に精通したチームが、現地トレンドをいち早くキャッチ。</p>
         </div>
         <div class="about-card ac-2">
           <div class="about-card-icon">02</div>
-          <h4>クリエイティブ力</h4>
+          <h3>クリエイティブ力</h3>
           <p>SNSバズを生み出す、感性に響くクリエイティブをご提供します。</p>
         </div>
         <div class="about-card ac-3">
           <div class="about-card-icon">03</div>
-          <h4>結果にコミット</h4>
+          <h3>結果にコミット</h3>
           <p>数字で語れる成果を出すためのデータドリブンな運用設計。</p>
         </div>
       </div>
@@ -2510,7 +2517,7 @@
 </section>
 
 <!-- ============ SERVICES ============ -->
-<section id="services" class="services">
+<section id="services" class="services" aria-label="サービス">
   <div class="container">
     <div class="section-head reveal">
       <span class="eyebrow">Our Services</span>
@@ -2588,7 +2595,7 @@
 </section>
 
 <!-- ============ BRANDS ============ -->
-<section id="brands" class="brands">
+<section id="brands" class="brands" aria-label="取り扱いブランド">
   <div class="container">
     <div class="section-head reveal">
       <span class="eyebrow">Partner Brands</span>
@@ -2641,7 +2648,7 @@
 </section>
 
 <!-- ============ BENTO HIGHLIGHTS ============ -->
-<section class="bento">
+<section class="bento" aria-label="実績数値">
   <div class="container">
     <div class="bento-head reveal">
       <div>
@@ -2691,8 +2698,8 @@
         <div class="label">Total Reach</div>
         <div class="big-num"><span data-counter="450">0</span><span class="unit">M+</span></div>
         <p class="desc">SNS総リーチ数（年間）</p>
-        <span class="floating-emoji fe-1">K-BEAUTY</span>
-        <span class="floating-emoji fe-2">SINCE 2018</span>
+        <span class="floating-emoji fe-1" aria-hidden="true">K-BEAUTY</span>
+        <span class="floating-emoji fe-2" aria-hidden="true">SINCE 2018</span>
       </div>
 
       <!-- Cream card with year founded -->
@@ -2706,7 +2713,7 @@
 </section>
 
 <!-- ============ WORKS ============ -->
-<section id="works" class="works">
+<section id="works" class="works" aria-label="制作実績">
   <div class="container">
     <div class="section-head reveal">
       <span class="eyebrow">Selected Works</span>
@@ -2720,7 +2727,7 @@
         </div>
         <div class="work-info">
           <span class="work-cat">CASTING / SNS</span>
-          <h4>新作リップティント日本ローンチ</h4>
+          <h3>新作リップティント日本ローンチ</h3>
           <p>YouTube・Instagram総再生数450万回突破</p>
         </div>
       </div>
@@ -2730,7 +2737,7 @@
         </div>
         <div class="work-info">
           <span class="work-cat">BRAND MARKETING</span>
-          <h4>スキンケアブランドリブランディング</h4>
+          <h3>スキンケアブランドリブランディング</h3>
           <p>EC売上前年比260%達成</p>
         </div>
       </div>
@@ -2740,7 +2747,7 @@
         </div>
         <div class="work-info">
           <span class="work-cat">INFLUENCER PR</span>
-          <h4>クッションファンデPRキャンペーン</h4>
+          <h3>クッションファンデPRキャンペーン</h3>
           <p>TikTokトレンドハッシュタグ1位獲得</p>
         </div>
       </div>
@@ -2750,7 +2757,7 @@
         </div>
         <div class="work-info">
           <span class="work-cat">EVENT / POPUP</span>
-          <h4>渋谷ポップアップストア企画</h4>
+          <h3>渋谷ポップアップストア企画</h3>
           <p>10日間で来場者1.2万人を動員</p>
         </div>
       </div>
@@ -2760,7 +2767,7 @@
         </div>
         <div class="work-info">
           <span class="work-cat">SNS PRODUCTION</span>
-          <h4>公式Instagram運用代行</h4>
+          <h3>公式Instagram運用代行</h3>
           <p>フォロワー数6ヶ月で15万人増</p>
         </div>
       </div>
@@ -2770,7 +2777,7 @@
         </div>
         <div class="work-info">
           <span class="work-cat">ADVERTISING</span>
-          <h4>YouTube広告クリエイティブ制作</h4>
+          <h3>YouTube広告クリエイティブ制作</h3>
           <p>視聴完了率業界平均の2.4倍</p>
         </div>
       </div>
@@ -2779,7 +2786,7 @@
 </section>
 
 <!-- ============ NEWS / PRESS RELEASES ============ -->
-<section id="news" class="news">
+<section id="news" class="news" aria-label="お知らせ">
   <div class="dot-grid-bg"></div>
   <div class="container">
     <div class="section-head reveal">
@@ -2839,7 +2846,7 @@
 </section>
 
 <!-- ============ WHY US ============ -->
-<section class="why">
+<section class="why" aria-label="選ばれる理由">
   <div class="grain-overlay" aria-hidden="true"></div>
   <div class="container">
     <div class="reveal">
@@ -2867,12 +2874,12 @@
 </section>
 
 <!-- ============ COMPANY ============ -->
-<section id="company" class="company">
+<section id="company" class="company" aria-label="会社概要">
   <div class="container">
     <div class="company-wrap">
       <div class="reveal">
         <span class="eyebrow">Company</span>
-        <span class="ghost-en">COMPANY</span>
+        <span class="ghost-en" aria-hidden="true">COMPANY</span>
         <h2>会社概要</h2>
         <p>韓国コスメと日本市場をつなぐ、私たちのプロフィール。</p>
       </div>
@@ -2907,12 +2914,12 @@
 </section>
 
 <!-- ============ CONTACT ============ -->
-<section id="contact" class="contact">
+<section id="contact" class="contact" aria-label="お問い合わせ">
   <div class="container">
     <div class="contact-card reveal">
       <div class="content">
         <span class="eyebrow">Get in touch</span>
-        <span class="ghost-en">CONTACT</span>
+        <span class="ghost-en" aria-hidden="true">CONTACT</span>
         <h2>一緒に、サプライズを<br />起こしませんか？</h2>
         <p>ブランドの日本展開、SNSマーケティング、インフルエンサー施策など、まずはお気軽にご相談ください。</p>
         <div class="contact-actions">
@@ -2938,13 +2945,13 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <a href="#top" class="logo">
-          <img src="assets/logo.png" alt="Sunnyway" width="36" height="36" decoding="async" />
+          <img src="assets/logo.png" alt="" width="36" height="36" decoding="async" />
           Sunnyway
         </a>
         <p>韓国コスメ・ビューティーブランドの日本マーケティングを支援するキャスティング・PR会社。サプライズを起こし続けます。</p>
       </div>
       <div>
-        <h5>Service</h5>
+        <h3>Service</h3>
         <ul>
           <li><a href="#services">Brand Marketing</a></li>
           <li><a href="#services">Casting</a></li>
@@ -2953,7 +2960,7 @@
         </ul>
       </div>
       <div>
-        <h5>Company</h5>
+        <h3>Company</h3>
         <ul>
           <li><a href="#about">About</a></li>
           <li><a href="#brands">Brands</a></li>
@@ -2962,7 +2969,7 @@
         </ul>
       </div>
       <div>
-        <h5>Contact</h5>
+        <h3>Contact</h3>
         <ul>
           <li><a href="mailto:info@sunnyway.jp">info@sunnyway.jp</a></li>
           <li><a href="#contact">お問い合わせ</a></li>
@@ -2987,45 +2994,51 @@
 </footer>
 
 <script>
-  // ========== Reveal on scroll ==========
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in');
-        io.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+  // ========== Global flags (hoisted so a later throw can't disable load-critical code) ==========
+  const REDUCE_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const SUPPORTS_IO = 'IntersectionObserver' in window;
 
-  // Fallback: for elements already in viewport at load (e.g. hero), reveal immediately
-  // in case the IntersectionObserver has delayed delivery or the preloader occluded them.
-  const revealInViewportNow = () => {
-    const vh = window.innerHeight;
-    document.querySelectorAll('.reveal:not(.in)').forEach((el) => {
-      const r = el.getBoundingClientRect();
-      if (r.top < vh && r.bottom > 0) {
-        el.classList.add('in');
-        io.unobserve(el);
-      }
-    });
-  };
-  // Run a few times after load to catch late layout shifts
-  requestAnimationFrame(() => requestAnimationFrame(revealInViewportNow));
-  setTimeout(revealInViewportNow, 120);
-  setTimeout(revealInViewportNow, 600);
-  window.addEventListener('load', revealInViewportNow);
+  // ========== Preloader (registered first so it always hides, even if later JS throws) ==========
+  (() => {
+    const pre = document.getElementById('preloader');
+    if (!pre) return;
+    const hide = () => {
+      if (pre.classList.contains('is-done')) return;
+      pre.classList.add('is-done');
+      document.body.classList.add('loaded');
+      setTimeout(() => pre.remove(), 500);
+    };
+    if (document.readyState === 'complete') {
+      setTimeout(hide, REDUCE_MOTION ? 0 : 150);
+    } else {
+      window.addEventListener('load', () => setTimeout(hide, REDUCE_MOTION ? 0 : 150));
+    }
+    setTimeout(hide, 3000); // failsafe: never block longer than 3s
+  })();
 
-  // ========== Scroll Progress Bar ==========
-  const scrollBar = document.getElementById('scrollProgress');
-  const updateScrollBar = () => {
-    const h = document.documentElement;
-    const max = h.scrollHeight - h.clientHeight;
-    const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
-    scrollBar.style.width = pct + '%';
-  };
-  window.addEventListener('scroll', updateScrollBar, { passive: true });
-  updateScrollBar();
+  // ========== Reveal on scroll (with no-IO fallback) ==========
+  let io = null;
+  if (SUPPORTS_IO) {
+    io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+    // One deferred pass for elements already in view at load (hero); the IO covers the rest.
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const vh = window.innerHeight;
+      document.querySelectorAll('.reveal:not(.in)').forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.top < vh && r.bottom > 0) { el.classList.add('in'); io.unobserve(el); }
+      });
+    }));
+  } else {
+    document.querySelectorAll('.reveal').forEach((el) => el.classList.add('in'));
+  }
 
   // ========== Custom Cursor ==========
   const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -3038,6 +3051,26 @@
     let dx = mx, dy = my;
 
     let firstMove = true;
+    let cursorRunning = false;
+    function animateCursor() {
+      // dot follows immediately, ring lags slightly
+      dx += (mx - dx) * 0.85;
+      dy += (my - dy) * 0.85;
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      dot.style.transform = `translate(${dx}px, ${dy}px) translate(-50%, -50%)`;
+      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+      // Stop scheduling once converged; the next mousemove re-arms via startCursor().
+      if (Math.abs(mx - dx) < 0.1 && Math.abs(my - dy) < 0.1 &&
+          Math.abs(mx - rx) < 0.1 && Math.abs(my - ry) < 0.1) {
+        cursorRunning = false;
+        return;
+      }
+      requestAnimationFrame(animateCursor);
+    }
+    const startCursor = () => {
+      if (!cursorRunning) { cursorRunning = true; requestAnimationFrame(animateCursor); }
+    };
     window.addEventListener('mousemove', (e) => {
       mx = e.clientX;
       my = e.clientY;
@@ -3048,19 +3081,8 @@
         dot.classList.add('is-ready');
         ring.classList.add('is-ready');
       }
+      startCursor();
     });
-
-    const animateCursor = () => {
-      // dot follows immediately, ring lags slightly
-      dx += (mx - dx) * 0.85;
-      dy += (my - dy) * 0.85;
-      rx += (mx - rx) * 0.18;
-      ry += (my - ry) * 0.18;
-      dot.style.transform = `translate(${dx}px, ${dy}px) translate(-50%, -50%)`;
-      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
-      requestAnimationFrame(animateCursor);
-    };
-    animateCursor();
 
     // Hover state on interactive elements
     const hoverables = document.querySelectorAll('a, button, .btn, [data-tilt], .brand-card, .floating-tag, .nav-toggle');
@@ -3126,16 +3148,16 @@
     chars.forEach((ch, i) => {
       ch.style.transitionDelay = (i * 35) + 'ms';
     });
-    // Trigger AFTER preloader transitions out (coordinates with 650ms+ load delay)
+    // Trigger after load; the double-rAF defers one frame so the transition still plays.
     const triggerSplit = () => {
       requestAnimationFrame(() => {
         requestAnimationFrame(() => h1.classList.add('split-in'));
       });
     };
     if (document.readyState === 'complete') {
-      setTimeout(triggerSplit, 200);
+      triggerSplit();
     } else {
-      window.addEventListener('load', () => setTimeout(triggerSplit, 200));
+      window.addEventListener('load', triggerSplit);
     }
     // Absolute failsafe: after 2s, ensure split-in applied
     setTimeout(() => {
@@ -3146,11 +3168,12 @@
 
   // ========== Hero Mouse Parallax ==========
   const heroVisual = document.querySelector('.hero-visual');
-  if (heroVisual && isFinePointer) {
+  if (heroVisual && isFinePointer && !REDUCE_MOTION) {
     const mascot = heroVisual.querySelector('.hero-mascot');
     const circle = heroVisual.querySelector('.hero-circle');
-    const tags = heroVisual.querySelectorAll('.floating-tag');
-    [mascot, circle, ...tags].forEach((el) => el && el.classList.add('parallax-layer'));
+    // Note: .floating-tag elements run a CSS `bob` keyframe that owns their transform,
+    // so parallax is applied only to the mascot + circle (tags keep bob + hover pop).
+    [mascot, circle].forEach((el) => el && el.classList.add('parallax-layer'));
 
     heroVisual.addEventListener('mousemove', (e) => {
       const rect = heroVisual.getBoundingClientRect();
@@ -3158,21 +3181,16 @@
       const y = (e.clientY - rect.top) / rect.height - 0.5;
       if (mascot) mascot.style.transform = `translate(${x * 24}px, ${y * 24}px) scale(1.02)`;
       if (circle) circle.style.transform = `translate(${x * -16}px, ${y * -16}px)`;
-      tags.forEach((t, i) => {
-        const depth = (i + 1) * 12;
-        t.style.transform = `translate(${x * depth}px, ${y * depth}px)`;
-      });
     });
     heroVisual.addEventListener('mouseleave', () => {
       if (mascot) mascot.style.transform = '';
       if (circle) circle.style.transform = '';
-      tags.forEach((t) => (t.style.transform = ''));
     });
   }
 
   // ========== 3D Tilt Cards ==========
   const tiltEls = document.querySelectorAll('[data-tilt]');
-  if (isFinePointer && window.innerWidth > 880) {
+  if (isFinePointer && window.innerWidth > 880 && !REDUCE_MOTION) {
     tiltEls.forEach((el) => {
       el.addEventListener('mousemove', (e) => {
         const rect = el.getBoundingClientRect();
@@ -3210,15 +3228,21 @@
     };
     requestAnimationFrame(tick);
   };
-  const counterIO = new IntersectionObserver((entries) => {
+  const counterIO = SUPPORTS_IO ? new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         animateCount(entry.target);
         counterIO.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.4 });
-  counters.forEach((c) => counterIO.observe(c));
+  }, { threshold: 0.4 }) : null;
+  const observeCounter = (el) => {
+    if (counterIO) { counterIO.observe(el); return; }
+    // No IntersectionObserver: show the final value immediately.
+    const target = parseInt(el.getAttribute('data-counter'), 10) || 0;
+    el.textContent = target >= 1000 ? target.toLocaleString('en-US') : String(target);
+  };
+  counters.forEach(observeCounter);
 
   // Make stat numbers in hero animate too (they don't have data-counter — wrap them)
   document.querySelectorAll('.hero-stats .stat-num').forEach((el) => {
@@ -3230,39 +3254,20 @@
       span.setAttribute('data-counter', String(numeric));
       span.textContent = '0';
       el.firstChild.replaceWith(span);
-      counterIO.observe(span);
+      observeCounter(span);
     }
   });
 
   /* ================================================================ */
   /* =============== ANIMATION UPGRADE (JS controllers) ============== */
   /* ================================================================ */
-
-  const REDUCE_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // ---------- Preloader ----------
-  (() => {
-    const pre = document.getElementById('preloader');
-    if (!pre) return;
-    const hide = () => {
-      pre.classList.add('is-done');
-      document.body.classList.add('loaded');
-      setTimeout(() => pre.remove(), 900);
-    };
-    if (document.readyState === 'complete') {
-      setTimeout(hide, REDUCE_MOTION ? 0 : 650);
-    } else {
-      window.addEventListener('load', () => setTimeout(hide, REDUCE_MOTION ? 0 : 650));
-    }
-    // Safety failsafe: never block longer than 3s
-    setTimeout(hide, 3000);
-  })();
+  /* (REDUCE_MOTION, SUPPORTS_IO and the preloader are hoisted to the top of the script.) */
 
   // ---------- Split text: every h2 in .section-head + bento-head, about/company/contact ----------
   (() => {
     if (REDUCE_MOTION) return;
     const heads = document.querySelectorAll(
-      '.section-head h2, .bento-head h2, .about-grid h2, .company-grid h2, .contact-grid h2, .why .reveal h2'
+      '.section-head h2, .bento-head h2, .about-grid h2, .company-wrap h2, .contact-card h2, .why .reveal h2'
     );
     heads.forEach((h) => {
       // Build fragmenting wrapper: each text node -> word spans
@@ -3307,26 +3312,28 @@
       });
     });
 
-    const headIO = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add('split-ready');
-          headIO.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.25 });
-    heads.forEach((h) => headIO.observe(h));
-    // Fallback: immediate reveal for h2s in viewport at load
-    const headsFallback = () => {
-      const vh = window.innerHeight;
-      heads.forEach((h) => {
-        if (h.classList.contains('split-ready')) return;
-        const r = h.getBoundingClientRect();
-        if (r.top < vh && r.bottom > 0) h.classList.add('split-ready');
-      });
-    };
-    setTimeout(headsFallback, 200);
-    setTimeout(headsFallback, 800);
+    if (SUPPORTS_IO) {
+      const headIO = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('split-ready');
+            headIO.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.25 });
+      heads.forEach((h) => headIO.observe(h));
+      // One deferred pass for headings already in view at load.
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        const vh = window.innerHeight;
+        heads.forEach((h) => {
+          if (h.classList.contains('split-ready')) return;
+          const r = h.getBoundingClientRect();
+          if (r.top < vh && r.bottom > 0) h.classList.add('split-ready');
+        });
+      }));
+    } else {
+      heads.forEach((h) => h.classList.add('split-ready'));
+    }
   })();
 
   // ---------- Magnetic buttons ----------
@@ -3366,6 +3373,7 @@
   // ---------- Ambient sparkles in hero ----------
   (() => {
     if (REDUCE_MOTION) return;
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches || window.innerWidth <= 880) return;
     const field = document.getElementById('sparkleField');
     if (!field) return;
     const COUNT = 14;
@@ -3388,33 +3396,7 @@
     }
   })();
 
-  // ---------- Ghost EN scroll drift ----------
-  (() => {
-    if (REDUCE_MOTION) return;
-    const heads = document.querySelectorAll('.section-head h2[data-en]');
-    if (!heads.length) return;
-    const update = () => {
-      heads.forEach((h) => {
-        const rect = h.getBoundingClientRect();
-        const vh = window.innerHeight;
-        // 0 when h2 is at viewport top, 1 when at bottom
-        const progress = 1 - (rect.top + rect.height / 2) / vh;
-        const offset = (progress - 0.5) * 100; // -50..50 px
-        h.style.setProperty('--ghost-x', offset + 'px');
-      });
-    };
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          update();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }, { passive: true });
-    update();
-  })();
+  // (Ghost-EN scroll drift is handled by the unified scroll pipeline near the end of this script.)
 
   // ---------- Service card spotlight glow follow ----------
   (() => {
@@ -3508,49 +3490,34 @@
 
   // ---------- Marquee runs at constant CSS-defined speed (scroll-velocity boost removed per user request) ----------
 
-  // ---------- Section parallax for hero visual + mascot + bento-bg ----------
-  (() => {
-    if (REDUCE_MOTION) return;
-    const heroVisual = document.querySelector('.hero-visual');
-    const aboutVisual = document.querySelector('.about-visual');
-    const layers = [
-      { el: heroVisual, factor: 0.12 },
-      { el: aboutVisual, factor: -0.08 },
-    ].filter((l) => l.el);
-    const update = () => {
-      const y = window.scrollY;
-      layers.forEach(({ el, factor }) => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight && rect.bottom > 0) {
-          el.style.transform = `translate3d(0, ${y * factor}px, 0)`;
-        }
-      });
-    };
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        requestAnimationFrame(() => { update(); ticking = false; });
-        ticking = true;
-      }
-    }, { passive: true });
-  })();
+  // (Section parallax for hero/about visuals is handled by the unified scroll pipeline near the end.)
 
-  // ---------- Mascot subtle idle sway ----------
+  // ---------- Mascot subtle idle sway (desktop pointer only; paused while hero is off-screen) ----------
   (() => {
-    if (REDUCE_MOTION) return;
+    if (REDUCE_MOTION || !isFinePointer) return;
     const m = document.querySelector('.hero-mascot');
     if (!m) return;
     let t = 0;
+    let rafId = null;
     const loop = () => {
       t += 0.012;
-      // Compose with existing transform (mouse parallax sets inline on mousemove;
-      // we'll only idle sway when hero visual not hovered)
+      // Idle sway only when the hero visual is not hovered (mouse parallax owns the transform then).
       if (!m.classList.contains('is-hovered')) {
         m.style.transform = `translate(0, ${Math.sin(t) * 6}px) rotate(${Math.sin(t * 0.8) * 1.6}deg)`;
       }
-      requestAnimationFrame(loop);
+      rafId = requestAnimationFrame(loop);
     };
-    loop();
+    const start = () => { if (rafId === null) rafId = requestAnimationFrame(loop); };
+    const stop = () => { if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; } };
+    const hero = document.querySelector('.hero');
+    if (hero && SUPPORTS_IO) {
+      const swayIO = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) start(); else stop(); });
+      }, { threshold: 0 });
+      swayIO.observe(hero);
+    } else {
+      start();
+    }
     const hv = document.querySelector('.hero-visual');
     if (hv) {
       hv.addEventListener('mouseenter', () => m.classList.add('is-hovered'));
@@ -3571,29 +3538,52 @@
     document.querySelectorAll('.eyebrow').forEach((el) => ios.observe(el));
   })();
 
-  // ---------- Mobile menu toggle ----------
+  // ---------- Mobile menu toggle (focus move-in/return + Tab trap) ----------
   (() => {
     const toggle = document.querySelector('.nav-toggle');
     const header = document.querySelector('.header');
     if (!toggle || !header) return;
+    const navLinks = header.querySelector('.nav-links');
+    const isOpen = () => header.classList.contains('is-open');
+    // Live list of focusables inside the open panel + the toggle (which doubles as the close button).
+    const getFocusable = () => {
+      const inMenu = navLinks
+        ? Array.from(navLinks.querySelectorAll('a[href], button:not([disabled])'))
+            .filter((el) => el.offsetParent !== null) // visible only (the CTA is display:none until open)
+        : [];
+      return [toggle, ...inMenu];
+    };
     const setOpen = (open) => {
       header.classList.toggle('is-open', open);
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       toggle.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
       document.body.style.overflow = open ? 'hidden' : '';
+      if (open) {
+        const f = getFocusable();
+        (f[1] || toggle).focus(); // move focus into the panel (first nav link)
+      } else {
+        toggle.focus(); // return focus to the toggle on close
+      }
     };
-    toggle.addEventListener('click', () => setOpen(!header.classList.contains('is-open')));
+    toggle.addEventListener('click', () => setOpen(!isOpen()));
     // Close when any nav link is tapped
     header.querySelectorAll('.nav-links a').forEach((a) => {
       a.addEventListener('click', () => setOpen(false));
     });
-    // Close on Escape
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && header.classList.contains('is-open')) setOpen(false);
+      if (!isOpen()) return;
+      if (e.key === 'Escape') { setOpen(false); return; }
+      if (e.key !== 'Tab') return;
+      const f = getFocusable();
+      if (f.length < 2) return;
+      const first = f[0], last = f[f.length - 1], active = document.activeElement;
+      if (e.shiftKey && active === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && active === last) { e.preventDefault(); first.focus(); }
+      else if (!f.includes(active)) { e.preventDefault(); first.focus(); }
     });
     // Reset when resizing back to desktop
     window.addEventListener('resize', () => {
-      if (window.innerWidth > 880 && header.classList.contains('is-open')) setOpen(false);
+      if (window.innerWidth > 880 && isOpen()) setOpen(false);
     });
   })();
 
@@ -3609,25 +3599,64 @@
     });
   });
 
-  // ---------- Intersection-driven subtle hero-bg blob shift on scroll ----------
+  // ---------- Unified scroll pipeline (one passive listener, one rAF, all reads then all writes) ----------
   (() => {
-    if (REDUCE_MOTION) return;
-    const blobs = document.querySelectorAll('.hero-bg .blob');
-    if (!blobs.length) return;
-    const update = () => {
-      const y = window.scrollY;
-      blobs.forEach((b, i) => {
-        const f = (i + 1) * 0.06;
-        b.style.transform = `translate3d(0, ${y * f}px, 0) scale(${1 + Math.sin(y * 0.002 + i) * 0.06})`;
-      });
+    const scrollBar = document.getElementById('scrollProgress');
+    // Effects gated by reduced motion stay empty so only the progress bar runs.
+    const ghostHeads = REDUCE_MOTION ? [] : Array.from(document.querySelectorAll('.section-head h2[data-en]'));
+    const heroVisual = REDUCE_MOTION ? null : document.querySelector('.hero-visual');
+    const aboutVisual = REDUCE_MOTION ? null : document.querySelector('.about-visual');
+    const layers = [
+      { el: heroVisual, factor: 0.12 },
+      { el: aboutVisual, factor: -0.08 },
+    ].filter((l) => l.el);
+    const blobs = REDUCE_MOTION ? [] : Array.from(document.querySelectorAll('.hero-bg .blob'));
+
+    // Cached layout metrics (read off the scroll path, refreshed on resize/load).
+    let docMax = 0, innerH = window.innerHeight;
+    const refreshMetrics = () => {
+      const h = document.documentElement;
+      docMax = h.scrollHeight - h.clientHeight;
+      innerH = window.innerHeight;
     };
+    refreshMetrics();
+    window.addEventListener('resize', refreshMetrics, { passive: true });
+    window.addEventListener('load', refreshMetrics);
+    requestAnimationFrame(() => requestAnimationFrame(refreshMetrics));
+
+    const ghostVals = new Array(ghostHeads.length);
+    const layerVals = new Array(layers.length);
     let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        requestAnimationFrame(() => { update(); ticking = false; });
-        ticking = true;
+
+    const onFrame = () => {
+      ticking = false;
+      const y = window.scrollY;
+      // ---- READ PHASE (batched getBoundingClientRect) ----
+      for (let i = 0; i < ghostHeads.length; i++) {
+        const rect = ghostHeads[i].getBoundingClientRect();
+        const progress = 1 - (rect.top + rect.height / 2) / innerH;
+        ghostVals[i] = (progress - 0.5) * 100;
       }
-    }, { passive: true });
+      for (let i = 0; i < layers.length; i++) {
+        const rect = layers[i].el.getBoundingClientRect();
+        layerVals[i] = (rect.top < innerH && rect.bottom > 0) ? y * layers[i].factor : null;
+      }
+      // ---- WRITE PHASE (transforms / style writes) ----
+      if (scrollBar) scrollBar.style.transform = 'scaleX(' + (docMax > 0 ? y / docMax : 0) + ')';
+      for (let i = 0; i < ghostHeads.length; i++) {
+        ghostHeads[i].style.setProperty('--ghost-x', ghostVals[i] + 'px');
+      }
+      for (let i = 0; i < layers.length; i++) {
+        if (layerVals[i] !== null) layers[i].el.style.transform = `translate3d(0, ${layerVals[i]}px, 0)`;
+      }
+      for (let i = 0; i < blobs.length; i++) {
+        const f = (i + 1) * 0.06;
+        blobs[i].style.transform = `translate3d(0, ${y * f}px, 0) scale(${1 + Math.sin(y * 0.002 + i) * 0.06})`;
+      }
+    };
+    const requestFrame = () => { if (!ticking) { ticking = true; requestAnimationFrame(onFrame); } };
+    window.addEventListener('scroll', requestFrame, { passive: true });
+    onFrame(); // initial paint
   })();
 
 </script>
